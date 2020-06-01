@@ -1,19 +1,9 @@
 <div class="container">
-    <button class="btn btn-primary" (click)="onFirstChange()">Change name</button>
-  <app-cockpit (svrCreated)="onServerCreated($event)" (blueprintCreated)="onBlueprintCreated($event)"></app-cockpit>
-  <hr>
   <div class="row">
-    <div class="col-xs-12">
-      <app-server-element
-        *ngFor="let serverElement of serverElements"
-        [srvName]="serverElement.name"
-        >
-
-        <p #paragraphContent>
-          <strong *ngIf="serverElement.type === 'server'" style="color: red">{{ serverElement.content }}</strong>
-          <em *ngIf="serverElement.type === 'blueprint'">{{ serverElement.content }}</em>
-        </p>
-      </app-server-element>
+    <div class="col-12">
+      <app-game-control></app-game-control>
+      <app-odd></app-odd>
+      <app-even></app-even>
     </div>
   </div>
 </div>
