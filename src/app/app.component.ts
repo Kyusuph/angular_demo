@@ -6,6 +6,9 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
+  score = 0;
+lastScore = 0;
+  stopped = true;
   serverElements = [{type: 'server', name: 'Test server', content: 'Just a server'}];
 
   onServerCreated(serverData: {serverName: string, serverContent: string}) {
@@ -26,5 +29,23 @@ export class AppComponent {
 
   onFirstChange() {
     this.serverElements[0].name = 'Changed';
+  }
+
+  onStarted(score: number) {
+    this.stopped = false;
+    this.score = score;
+  }
+
+  onStopped(score: number) {
+    this.stopped = true;
+    this.lastScore = score;
+  }
+
+  isOdd(value: number): boolean {
+    let toReturn = true;
+    if(value % 2 === 0) {
+      toReturn = false;
+    }
+    return toReturn;
   }
 }

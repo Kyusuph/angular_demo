@@ -1,10 +1,18 @@
 <!-- <div class="container"> -->
   <div class="row">
     <div class="col-sm-6">
-      <button class="btn btn-primary" (click)="onStart()">Start</button>
+      <button
+        class="btn btn-primary"
+        (click)="gameControl(true)"
+        [disabled]="gameStarted"
+      >Start</button>
     </div>
     <div class="col-sm-6">
-        <button class="btn btn-danger" (click)="onStop()">Stop</button>
+        <button
+          class="btn btn-danger"
+          (click)="gameControl(false)"
+          [disabled]="!gameStarted"
+        >Stop</button>
     </div>
   </div>
 <!-- </div> -->

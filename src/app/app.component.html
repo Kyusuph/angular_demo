@@ -1,9 +1,16 @@
 <div class="container">
   <div class="row">
     <div class="col-12">
-      <app-game-control></app-game-control>
-      <app-odd></app-odd>
-      <app-even></app-even>
+      <app-game-control
+        (gameStarted)="onStarted($event)"
+        (gameStopped)="onStopped($event)"
+      ></app-game-control>
+      <app-odd [gameScore]="score" *ngIf="isOdd(score)" ></app-odd>
+      <app-even [gameScore]="score" *ngIf="!isOdd(score)"></app-even>
+    </div>
+    <div class="col-12">
+      <h5>Game score is {{ stopped ? lastScore : score }}</h5>
+      <p *ngIf="stopped && score">Game Stopped</p>
     </div>
   </div>
 </div>
