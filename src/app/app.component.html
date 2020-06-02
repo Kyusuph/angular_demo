@@ -1,16 +1,18 @@
 <div class="container">
   <div class="row">
-    <div class="col-12">
-      <app-game-control
-        (gameStarted)="onStarted($event)"
-        (gameStopped)="onStopped($event)"
-      ></app-game-control>
-      <app-odd [gameScore]="oddScore" *ngFor="let oddScore of oddScores" ></app-odd>
-      <app-even [gameScore]="evenScore" *ngFor="let evenScore of evenScores" ></app-even>
-    </div>
-    <div class="col-12">
-      <h5>Game score is {{ stopped ? lastScore : score }}</h5>
-      <p *ngIf="stopped && score">Game Stopped</p>
+    <div class="col-xs-12">
+      <button
+        class="btn btn-primary"
+        (click)="onlyOdd = !onlyOdd">Only show odd numbers</button>
+      <br><br>
+      <ul class="list-group">
+        <li
+          class="list-group-item">
+        </li>
+      </ul>
+      <ng-template [ngIf]="onlyOdd">
+        <p>Only odd</p>
+      </ng-template>
     </div>
   </div>
 </div>
