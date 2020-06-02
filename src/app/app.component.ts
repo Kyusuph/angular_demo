@@ -10,6 +10,7 @@ export class AppComponent {
   oddNumbers = [1, 3, 5];
   evenNumbers = [2, 4];
   onlyOdd = false;
+  value = 7;
 
-  color = 'black';
+  color = 'red';
 }
