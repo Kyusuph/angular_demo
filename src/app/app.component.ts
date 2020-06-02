@@ -10,6 +10,8 @@ export class AppComponent {
 lastScore = 0;
   stopped = true;
   serverElements = [{type: 'server', name: 'Test server', content: 'Just a server'}];
+  oddScores: number[] = [];
+  evenScores: number[] = [];
 
   onServerCreated(serverData: {serverName: string, serverContent: string}) {
     this.serverElements.push({
@@ -32,6 +34,11 @@ lastScore = 0;
   }
 
   onStarted(score: number) {
+    if(this.isOdd(score)) {
+      this.oddScores.push(score);
+    } else {
+      this.evenScores.push(score);
+    }
     this.stopped = false;
     this.score = score;
   }

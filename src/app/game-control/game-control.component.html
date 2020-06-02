@@ -3,16 +3,16 @@
     <div class="col-sm-6">
       <button
         class="btn btn-primary"
-        (click)="gameControl(true)"
+        (click)="onGameStart()"
         [disabled]="gameStarted"
-      >Start</button>
+      >Start Game</button>
     </div>
     <div class="col-sm-6">
         <button
           class="btn btn-danger"
-          (click)="gameControl(false)"
+          (click)="onGameStop()"
           [disabled]="!gameStarted"
-        >Stop</button>
+        >Pause Game</button>
     </div>
   </div>
 <!-- </div> -->

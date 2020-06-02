@@ -7,6 +7,7 @@ import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 })
 export class GameControlComponent implements OnInit {
 
+  gameTimer;
   score = 0;
   gameStarted = false;
   myTimeInterval;
@@ -18,19 +19,19 @@ export class GameControlComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  gameControl(event: boolean) {
-    const gameTimer = setInterval(() => {
-      if (this.gameStarted) {
-        this.score++;
-        this.startGame.emit(this.score);
-      }
+  onGameStart() {
+    this.gameTimer = setInterval(() => {
+      this.score++;
+      this.startGame.emit(this.score);
     }, 1000);
-    if (!event) {
-      this.stopGame.emit(this.score);
-      this.score = 0;
-      clearInterval(gameTimer);
-    }
-    this.gameStarted = event;
+    this.gameStarted = true;
+  }
+
+  onGameStop() {
+    clearInterval(this.gameTimer);
+    console.log('Stopped');
+    this.gameStarted = false;
+    this.stopGame.emit(this.score);
   }
 
 }
