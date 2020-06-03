@@ -1,52 +1,13 @@
 <div class="container">
   <div class="row">
-    <div class="col-xs-12">
-      <button
-        class="btn btn-primary"
-        (click)="onlyOdd = !onlyOdd">Only show odd numbers</button>
-      <br><br>
-      <ul
-        class="list-group"
-      >
-          <div *ngIf="onlyOdd">
-              <li
-                class="list-group-item"
-                *ngFor="let odd of oddNumbers"
-                [ngClass]="{'odd': onlyOdd, 'even': !onlyOdd}"
-                [ngStyle]="{backgroundColor: onlyOdd ? 'yellow': 'blue'}"
-              >
-                {{ odd }}
-              </li>
-          </div>
-          <!-- <div *ngIf="!onlyOdd">
-              <li
-                class="list-group-item"
-                *ngFor="let even of evenNumbers"
-                [ngClass]="{'odd': onlyOdd, 'even': !onlyOdd}"
-                [ngStyle]="{backgroundColor: onlyOdd ? 'yellow': 'blue'}"
-              >
-                {{ even }}
-              </li>
-          </div> -->
-          <div *appUnless="onlyOdd">
-            <li
-              class="list-group-item"
-              *ngFor="let even of evenNumbers"
-              [ngClass]="{'odd': onlyOdd, 'even': !onlyOdd}"
-              [ngStyle]="{backgroundColor: onlyOdd ? 'yellow': 'blue'}"
-            >
-              {{ even }}
-            </li>
-        </div>
-      </ul>
-      <p appBasicHighLight>Please style me with basic directive!</p>
-      <p [appBetterHighlight]="'blue'" [highlightColor]="color">Please style me with better directive!</p>
-      <div [ngSwitch]="value">
-      <p *ngSwitchCase="10"> Value is 10</p>
-      <p *ngSwitchCase="5"> Value is 5</p>
-      <p *ngSwitchCase="6"> Value is 6</p>
-      <p *ngSwitchCase="7"> Value is 7</p>
-      </div>
+    <div class="col-xs-12 col-md-8 col-md-offset-2">
+      <app-new-account (accountAdded)="onAccountAdded($event)"></app-new-account>
+      <hr>
+      <app-account
+        *ngFor="let acc of accounts; let i = index"
+        [account]="acc"
+        [id]="i"
+        (statusChanged)="onStatusChanged($event)"></app-account>
     </div>
   </div>
 </div>
