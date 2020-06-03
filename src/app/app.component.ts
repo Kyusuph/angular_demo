@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 import { UserService } from './users.service';
+import { CenterService } from './center.service';
 
 
 @Component({
@@ -8,10 +9,17 @@ import { UserService } from './users.service';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent implements OnInit{
+export class AppComponent implements OnInit {
+  actvCount;
+  inActvCount;
 
-  constructor(private userService: UserService) {}
+  constructor(
+    private centerService: CenterService,
+    private userService: UserService
+  ) { }
 
   ngOnInit() {
+    this.actvCount = this.centerService.activationCount;
+    this.inActvCount = this.centerService.deActivationCount;
   }
 }
