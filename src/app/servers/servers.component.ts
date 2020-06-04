@@ -20,14 +20,14 @@ export class ServersComponent implements OnInit {
     this.servers = this.serversService.getServers();
   }
 
-  onReload() {
-    this.router.navigate(['/servers'],
-      {
-        relativeTo: this.activeRoute,
-        queryParams: {delete: 2, edit: 2},
-        fragment: 'deleting'
-      }
-    );
-  }
+  // onReload() {
+  //   this.router.navigate(['/servers'],
+  //     {
+  //       relativeTo: this.activeRoute,
+  //       queryParams: {delete: 2, edit: 2},
+  //       fragment: 'deleting'
+  //     }
+  //   );
+  // }
 
 }
