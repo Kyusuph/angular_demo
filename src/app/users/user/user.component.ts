@@ -19,13 +19,13 @@ export class UserComponent implements OnInit {
       };
     });
 
-    this.route.queryParams.subscribe((qParams) => {
-      console.log(qParams);
-    });
+    // this.route.queryParams.subscribe((qParams) => {
+    //   console.log(qParams);
+    // });
 
-    this.route.fragment.subscribe((frag) => {
-      console.log({frag});
-    });
+    // this.route.fragment.subscribe((frag) => {
+    //   console.log({frag});
+    // });
   }
 
 }

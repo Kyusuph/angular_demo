@@ -12,7 +12,7 @@ export class ServersComponent implements OnInit {
 
   constructor(
     private router: Router,
-    private actvRoute: ActivatedRoute,
+    private activeRoute: ActivatedRoute,
     private serversService: ServersService
     ) { }
 
@@ -23,7 +23,7 @@ export class ServersComponent implements OnInit {
   onReload() {
     this.router.navigate(['/servers'],
       {
-        relativeTo: this.actvRoute,
+        relativeTo: this.activeRoute,
         queryParams: {delete: 2, edit: 2},
         fragment: 'deleting'
       }
