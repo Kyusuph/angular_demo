@@ -3,6 +3,7 @@
     <div class="list-group">
       <a
         [routerLink]="['/servers', server.id]"
+        [queryParams]="{edit: false}"
         class="list-group-item"
         *ngFor="let server of servers">
         {{ server.name }}
