@@ -10,7 +10,6 @@ import { ActivatedRoute, Router } from '@angular/router';
 })
 export class ServerComponent implements OnInit {
   server: { id: number, name: string, status: string };
-  allowEdit = false;
 
   constructor(
     private route: ActivatedRoute,
@@ -24,15 +23,10 @@ export class ServerComponent implements OnInit {
     this.route.params.subscribe((params) => {
       this.server = this.serversService.getServer(+params?.id);
     });
-    this.route.snapshot.queryParams.subscribe((qParams) => {
-      console.log(qParams);
-      this.allowEdit = qParams.edit;
-      console.log(this.allowEdit);
-    });
   }
 
   onEdit() {
-    this.router.navigate(['edit'], {relativeTo: this.route});
+    this.router.navigate(['edit'], {relativeTo: this.route, queryParamsHandling: 'preserve'});
   }
 
 }

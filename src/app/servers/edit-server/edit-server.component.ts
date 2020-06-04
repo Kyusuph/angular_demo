@@ -9,9 +9,10 @@ import { ServersService } from '../servers.service';
   styleUrls: ['./edit-server.component.css']
 })
 export class EditServerComponent implements OnInit {
-  server: {id: number, name: string, status: string};
+  server: { id: number, name: string, status: string };
   serverName = '';
   serverStatus = '';
+  allowEdit = false;
 
   constructor(private router: Router, private route: ActivatedRoute, private serversService: ServersService) { }
 
@@ -21,13 +22,16 @@ export class EditServerComponent implements OnInit {
     this.route.params.subscribe((params) => {
       this.server = this.serversService.getServer(+params?.id);
     });
+    this.route.queryParams.subscribe((qParams) => {
+      this.allowEdit = qParams.edit === '1' ? true : false;
+    });
     this.serverName = this.server.name;
     this.serverStatus = this.server.status;
   }
 
   onUpdateServer() {
-    this.serversService.updateServer(this.server.id, {name: this.serverName, status: this.serverStatus});
-    this.router.navigate(['../'], {relativeTo: this.route});
+    this.serversService.updateServer(this.server.id, { name: this.serverName, status: this.serverStatus });
+    this.router.navigate(['../'], { relativeTo: this.route });
   }
 
 }
