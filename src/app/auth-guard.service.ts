@@ -5,14 +5,14 @@ import { Injectable } from '@angular/core';
 import { AuthService } from './auth.service';
 
 @Injectable()
-export class AuthGuard implements CanActivateChild {
+export class AuthGuard implements CanActivate, CanActivateChild {
 
   constructor(
     private authService: AuthService,
     private router: Router,
     private activatedRouter: ActivatedRoute
   ) { }
-  canActivateChild(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
+  canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
     const promise = this.authService.getLoginState()
       .then((login) => {
         if (login) {
@@ -24,6 +24,9 @@ export class AuthGuard implements CanActivateChild {
 
       });
     return promise;
+  }
 
+  canActivateChild(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
+    return this.canActivate(route, state);
   }
 }
