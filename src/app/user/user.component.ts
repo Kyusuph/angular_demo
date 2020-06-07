@@ -1,6 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 import { interval, Subscription, Observable } from 'rxjs';
+import { map, filter } from 'rxjs/operators';
 
 @Component({
   selector: 'app-user',
@@ -33,7 +34,11 @@ export class UserComponent implements OnInit, OnDestroy {
       }, 1000);
     });
 
-    this.subscription = this.observableDemo.subscribe((data: number) => {
+    this.subscription = this.observableDemo.pipe(filter((value: any) => {
+      return value > 0;
+    }), map((data: any) => {
+      return 'Count value is ' + data;
+    })).subscribe((data: any) => {
       console.log(data);
     },
       error => {
