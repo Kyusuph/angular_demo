@@ -1,8 +1,3 @@
 .container {
   margin-top: 30px;
 }
-.active-link {
-  background-color: yellow;
-  border: 2px solid black;
-  border-radius: 10px;
-}
