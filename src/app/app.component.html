@@ -9,7 +9,6 @@
               type="text"
               id="username"
               class="form-control"
-              [readonly]="validForm"
               ngModel
               name="username"
               required
@@ -23,7 +22,6 @@
               type="email"
               id="email"
               class="form-control"
-              [readonly]="validForm"
               ngModel
               name="email"
               required
@@ -37,12 +35,24 @@
           <select
             id="secret"
             class="form-control"
-            [disabled]="validForm"
-            ngModel
+            [ngModel]="defaultQuestion"
             name="secret">
             <option value="pet">Your first Pet?</option>
             <option value="teacher">Your first teacher?</option>
           </select>
+          <div class="form-group">
+            <label for="answer"></label>
+            <textarea
+              class="form-control"
+              name="questionAnswer"
+              id="answer"
+              cols="10"
+              [(ngModel)]="questionAnswer"
+              #answer="ngModel"
+              required>
+            </textarea>
+            <span style="color: red;" class="help-block" *ngIf="!answer.valid && answer.touched"> Please provide your answer here to continue!</span>
+          </div>
         </div>
         <button [disabled]="!f.valid" class="btn btn-primary" type="submit">Submit</button>
       </form>
