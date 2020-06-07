@@ -18,7 +18,7 @@ export class HomeComponent implements OnInit {
   }
 
   onActivate() {
-    this.userService.activateParagraph.emit(true);
+    this.userService.activateParagraph.next(true);
   }
 
 }
