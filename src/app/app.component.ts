@@ -33,7 +33,7 @@ export class AppComponent {
     //   questionAnswer: '',
     //   gender: '',
     // });
-    this.signUpForm.form.setValue({
+    this.signUpForm.form.patchValue({
       userData: {
         username: 'Kayson'
       }

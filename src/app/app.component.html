@@ -46,6 +46,7 @@
             name="secret">
             <option value="pet">Your first Pet?</option>
             <option value="teacher">Your first teacher?</option>
+            <option value="girlfriend">Your first girlfriend ?</option>
           </select>
           <div class="form-group">
             <label for="answer"></label>
@@ -84,7 +85,7 @@
     <div class="col-12">
       <p>Username: {{ user.username }} </p>
       <p>Email: {{ user.email }} </p>
-      <p>Question: {{ user.secret }} </p>
+      <p>Question: Your first {{ user.secret }} </p>
       <p>Answer: {{ user.answer }} </p>
       <p>Gender: {{ user.gender }} </p>
     </div>
