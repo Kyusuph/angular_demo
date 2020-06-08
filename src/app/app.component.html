@@ -18,7 +18,10 @@
               #username="ngModel">
               <span style="color: red;" class="help-block" *ngIf="!username.valid && username.touched"> This field is required!</span>
           </div>
-          <button class="btn btn-default" type="button">Suggest an Username</button>
+          <button
+            class="btn btn-default"
+            type="button"
+            (click)="suggestUserName()">Suggest an Username</button>
           <div class="form-group">
             <label for="email">Mail</label>
             <input
@@ -64,7 +67,8 @@
               type="radio"
               [ngModel]="startingGender"
               name="gender"
-              [value]="gender">
+              [value]="gender"
+              required>
             {{ gender }}
           </label>
         </div>
