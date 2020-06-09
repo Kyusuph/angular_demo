@@ -43,6 +43,15 @@ export class AppComponent implements OnInit {
       professionals: new FormArray([new FormControl(null, Validators.required)]),
     });
     this.signUpForm.get('userData.email').statusChanges.subscribe(status => console.log({status}));
+    this.signUpForm.setValue({
+      userData: {
+        username: 'John',
+        email: 'kaysonyusuph@gmail.com',
+      },
+      gender: 'female',
+      hobbies: ['Cooking'],
+      professionals: ['Zoologist']
+    });
   }
 
   onSubmit() {
