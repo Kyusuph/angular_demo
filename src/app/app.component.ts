@@ -12,6 +12,7 @@ export class AppComponent implements OnInit {
   static forbiddenEmail = 'kaysonyusuph@gmail.com';
   genders = ['male', 'female'];
   signUpForm: FormGroup;
+  showDataTable = false;
 
   static checkForbiddenNames(control: FormControl): { [s: string]: boolean } {
     if (AppComponent.forbiddenNames.includes(control.value)) {
@@ -70,5 +71,9 @@ export class AppComponent implements OnInit {
   generateFormField(value: string) {
     const control = new FormControl(null, Validators.required);
     (this.signUpForm.get(value) as FormArray).push(control);
+  }
+
+  onShowDataTable() {
+    this.showDataTable = !this.showDataTable;
   }
 }

@@ -1,5 +1,7 @@
+<button class="btn btn-primary" (click)="onShowDataTable()">Show table</button>
+<hr>
 <div class="container">
-  <div class="row">
+  <div class="row" *ngIf="!showDataTable">
     <div class="col-xs-12 col-sm-10 col-md-8 col-sm-offset-1 col-md-offset-2">
       <form [formGroup]="signUpForm" (ngSubmit)="onSubmit()">
         <div formGroupName="userData">
@@ -58,5 +60,8 @@
         <button class="btn btn-primary" type="submit">Submit</button>
       </form>
     </div>
+  </div>
+  <div *ngIf="showDataTable">
+    <app-data-table></app-data-table>
   </div>
 </div>
