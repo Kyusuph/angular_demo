@@ -52,10 +52,19 @@ export class AppComponent implements OnInit {
       hobbies: ['Cooking'],
       professionals: ['Zoologist']
     });
+    this.signUpForm.patchValue({
+      userData: {
+        username: 'Gift',
+        email: 'giftLazaro@gmail.com'
+      }
+    });
   }
 
   onSubmit() {
     console.log(this.signUpForm);
+    this.signUpForm.reset({
+      gender: 'male'
+    });
   }
 
   generateFormField(value: string) {
