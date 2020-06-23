@@ -74,6 +74,15 @@ export class AppComponent implements OnInit {
   }
 
   onShowDataTable() {
-    this.showDataTable = !this.showDataTable;
+    // this.showDataTable = !this.showDataTable;
+    setTimeout( async () => {
+      const promise = new Promise((resolve, reject) => {
+        setTimeout(() => {
+          resolve('Done');
+        }, 3000);
+      });
+      const result = await promise;
+      console.log({result});
+    }, 500);
   }
 }
