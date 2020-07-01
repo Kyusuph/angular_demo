@@ -1,79 +1,42 @@
-import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormControl, Validators, FormArray } from '@angular/forms';
-import { Observable } from 'rxjs';
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent implements OnInit {
-  static forbiddenNames = ['John', 'Peter'];
-  static forbiddenEmail = 'kaysonyusuph@gmail.com';
-  genders = ['male', 'female'];
-  signUpForm: FormGroup;
-  showDataTable = false;
-
-  static checkForbiddenNames(control: FormControl): { [s: string]: boolean } {
-    if (AppComponent.forbiddenNames.includes(control.value)) {
-      return { forbiddenName: true };
+export class AppComponent {
+  servers = [
+    {
+      instanceType: 'medium',
+      name: 'Production Server',
+      status: 'stable',
+      started: new Date(15, 1, 2017)
+    },
+    {
+      instanceType: 'large',
+      name: 'User Database',
+      status: 'stable',
+      started: new Date(15, 1, 2017)
+    },
+    {
+      instanceType: 'small',
+      name: 'Development Server',
+      status: 'offline',
+      started: new Date(15, 1, 2017)
+    },
+    {
+      instanceType: 'small',
+      name: 'Testing Environment Server',
+      status: 'stable',
+      started: new Date(15, 1, 2017)
     }
-    return null;
-  }
-
-  static checkForbiddenEmail(control: FormControl): Promise<any> | Observable<any> {
-    const promise = new Promise((resolve, reject) => {
-      setTimeout(() => {
-        if (AppComponent.forbiddenEmail === control.value) {
-          resolve({ forbiddenEmail: true });
-        }
-        resolve(null);
-      }, 3000);
-    });
-    return promise;
-  }
-
-  ngOnInit() {
-    this.signUpForm = new FormGroup({
-      userData: new FormGroup({
-        username: new FormControl(null, [Validators.required, AppComponent.checkForbiddenNames]),
-        email: new FormControl(null, [Validators.required, Validators.email], AppComponent.checkForbiddenEmail)
-      }),
-      gender: new FormControl('male'),
-      hobbies: new FormArray([new FormControl(null, Validators.required)]),
-      professionals: new FormArray([new FormControl(null, Validators.required)]),
-    });
-    this.signUpForm.get('userData.email').statusChanges.subscribe(status => console.log({status}));
-    this.signUpForm.setValue({
-      userData: {
-        username: 'John',
-        email: 'kaysonyusuph@gmail.com',
-      },
-      gender: 'female',
-      hobbies: ['Cooking'],
-      professionals: ['Zoologist']
-    });
-    this.signUpForm.patchValue({
-      userData: {
-        username: 'Gift',
-        email: 'giftLazaro@gmail.com'
-      }
-    });
-  }
-
-  onSubmit() {
-    console.log(this.signUpForm);
-    this.signUpForm.reset({
-      gender: 'male'
-    });
-  }
-
-  generateFormField(value: string) {
-    const control = new FormControl(null, Validators.required);
-    (this.signUpForm.get(value) as FormArray).push(control);
-  }
-
-  onShowDataTable() {
-    this.showDataTable = !this.showDataTable;
+  ];
+  getStatusClasses(server: {instanceType: string, name: string, status: string, started: Date}) {
+    return {
+      'list-group-item-success': server.status === 'stable',
+      'list-group-item-warning': server.status === 'offline',
+      'list-group-item-danger': server.status === 'critical'
+    };
   }
 }

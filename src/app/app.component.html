@@ -1,67 +1,20 @@
-<button class="btn btn-primary" (click)="onShowDataTable()">Show table</button>
-<hr>
 <div class="container">
-  <div class="row" *ngIf="!showDataTable">
+  <div class="row">
     <div class="col-xs-12 col-sm-10 col-md-8 col-sm-offset-1 col-md-offset-2">
-      <form [formGroup]="signUpForm" (ngSubmit)="onSubmit()">
-        <div formGroupName="userData">
-          <div class="form-group">
-            <label for="username">Username*</label>
-            <input
-              type="text"
-              id="username"
-              formControlName="username"
-              class="form-control">
-              <span style="color: red;" *ngIf="signUpForm.get('userData.username').hasError('required') && signUpForm.get('userData.username').touched">Please enter a valid username!</span>
-              <span style="color: red;" *ngIf="signUpForm.get('userData.username').hasError('forbiddenName') && signUpForm.get('userData.username').touched">This username is forbidden!</span>
-          </div>
-          <div class="form-group">
-            <label for="email">email*</label>
-            <input
-              type="text"
-              id="email"
-              formControlName="email"
-              class="form-control">
-              <span style="color: red;" *ngIf="signUpForm.get('userData.email').hasError('required') && signUpForm.get('userData.email').touched">Email field is required!</span>
-              <span style="color: red;" *ngIf="signUpForm.get('userData.email').hasError('email') && signUpForm.get('userData.email').touched">Please enter a valid email!</span>
-              <span style="color: red;" *ngIf="signUpForm.get('userData.email').hasError('forbiddenEmail') && signUpForm.get('userData.email').touched">This email is forbidden!</span>
-          </div>
-        </div>
-        <div class="radio" *ngFor="let gender of genders">
-          <label>
-            <input
-              type="radio"
-              formControlName="gender"
-              [value]="gender">{{ gender }}
-          </label>
-        </div>
-        <div class="form-group" formArrayName="hobbies">
-          <button class="btn btn-default" type="button" (click)="generateFormField('hobbies')">Add Hobby</button>
-          <div *ngFor="let hobby of signUpForm?.get('hobbies').controls; let i = index">
-            <hr>
-              <input
-                type="text"
-                class="form-control"
-                [formControlName]="i">
-          </div>
-        </div>
-        <hr>
-        <div class="form-group" formArrayName="professionals">
-          <button class="btn btn-default" type="button" (click)="generateFormField('professionals')">Add Professional</button>
-          <div *ngFor="let professional of signUpForm?.get('professionals').controls; let i = index">
-            <hr>
-              <input
-                type="text"
-                class="form-control"
-                [formControlName]="i">
-          </div>
-        </div>
-        <hr>
-        <button class="btn btn-primary" type="submit">Submit</button>
-      </form>
+      <ul class="list-group">
+        <li
+          class="list-group-item"
+          *ngFor="let server of servers"
+          [ngClass]="getStatusClasses(server)">
+          <span
+            class="badge">
+            {{ server.status }}
+          </span>
+          <strong>
+            {{ server.name }}
+          </strong> | {{ server.instanceType }} | {{ server.started }}
+        </li>
+      </ul>
     </div>
-  </div>
-  <div *ngIf="showDataTable">
-    <app-data-table></app-data-table>
   </div>
 </div>
