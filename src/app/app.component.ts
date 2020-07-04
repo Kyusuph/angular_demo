@@ -118,6 +118,7 @@ export class AppComponent implements OnInit {
           this.loading = false;
           this.error = error;
           console.log(error);
+          this.loadedPosts = [];
           console.error('Failed to load posts: ' + error.message);
       });
   }
@@ -128,5 +129,9 @@ export class AppComponent implements OnInit {
     const { title, content, id } = this.loadedPosts[index];
     this.postId = id;
     this.postForm.setValue({ title, content });
+  }
+
+  onHandleError() {
+    this.error = null;
   }
 }

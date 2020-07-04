@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 // import { pipe } from 'rxjs';
 import { map } from 'rxjs/operators';
 
@@ -18,7 +18,16 @@ export class PostService {
   }
 
   fetchPosts() {
-    return this.http.get<{ [key: string]: Post }>('https://demoz-app.firebaseio.com/posts.json')
+    const httpOptions = {
+      headers: new HttpHeaders({
+        name: 'Kayson',
+        age: '26'
+      }),
+      params: new HttpParams().set(
+        'print', 'pretty'
+      )
+    }
+    return this.http.get<{ [key: string]: Post }>('https://demoz-app.firebaseio.com/posts.json', httpOptions)
       .pipe(map((response) => {
         const responseArray: Post[] = [];
         for (const key in response) {
