@@ -1,10 +1,8 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { pipe } from 'rxjs';
-import { map } from 'rxjs/operators';
 import { FormGroup } from '@angular/forms';
 
 import { Post } from './post.model';
+import { PostService } from './post.service';
 
 @Component({
   selector: 'app-root',
@@ -20,7 +18,7 @@ export class AppComponent implements OnInit {
 
   @ViewChild('postForm') postForm: FormGroup;
 
-  constructor(private http: HttpClient) { }
+  constructor(private postService: PostService) { }
 
   ngOnInit() {
     this.fetchPosts();
@@ -35,7 +33,7 @@ export class AppComponent implements OnInit {
         ...postData,
         id
       };
-      this.http.put<{ name: string }>(`https://demoz-app.firebaseio.com/posts/${id}.json`, newPost)
+      this.postService.updatePost(newPost)
         .subscribe((response) => {
           this.loadedPosts[this.postIndex] = newPost;
           this.isFetching = false;
@@ -46,7 +44,7 @@ export class AppComponent implements OnInit {
             console.error('Failed to update post: ', error.message);
           });
     } else {
-      this.http.post<{ name: string }>('https://demoz-app.firebaseio.com/posts.json', postData)
+      this.postService.createPost(postData)
         .subscribe((response) => {
           const id = response.name;
           this.loadedPosts.push({
@@ -65,7 +63,7 @@ export class AppComponent implements OnInit {
 
   onDelete() {
     this.isFetching = true;
-    this.http.delete<{ name: string }>(`https://demoz-app.firebaseio.com/posts/${this.postId}.json`)
+    this.postService.deletePost(this.postId)
       .subscribe((response) => {
         this.loadedPosts.splice(this.postIndex, 1);
         this.isFetching = false;
@@ -94,16 +92,7 @@ export class AppComponent implements OnInit {
 
   private fetchPosts() {
     this.isFetching = true;
-    this.http.get<{ [key: string]: Post }>('https://demoz-app.firebaseio.com/posts.json')
-      .pipe(map((response) => {
-        const responseArray: Post[] = [];
-        for (const key in response) {
-          if (response.hasOwnProperty(key)) {
-            responseArray.push({ ...response[key], id: key });
-          }
-        }
-        return responseArray;
-      }))
+    this.postService.fetchPosts()
       .subscribe((response) => {
         this.loadedPosts = response;
         this.isFetching = false;
