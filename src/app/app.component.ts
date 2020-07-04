@@ -16,6 +16,7 @@ export class AppComponent implements OnInit {
   editPost = false;
   postId; string;
   postIndex; number;
+  isFetching = false;
 
   @ViewChild('postForm') postForm: FormGroup;
 
@@ -27,6 +28,7 @@ export class AppComponent implements OnInit {
 
   onSave(postData: Post) {
     // Send Http request
+    this.isFetching = true;
     if (this.editPost) {
       const id = this.postId;
       const newPost = {
@@ -36,9 +38,11 @@ export class AppComponent implements OnInit {
       this.http.put<{ name: string }>(`https://demoz-app.firebaseio.com/posts/${id}.json`, newPost)
         .subscribe((response) => {
           this.loadedPosts[this.postIndex] = newPost;
+          this.isFetching = false;
           this.onClearForm();
         },
           (error) => {
+            this.isFetching = false;
             console.error('Failed to update post: ', error.message);
           });
     } else {
@@ -49,21 +53,26 @@ export class AppComponent implements OnInit {
             ...postData,
             id
           });
+          this.isFetching = false;
           this.onClearForm();
         },
           (error) => {
+            this.isFetching = false;
             console.error('Failed to save post: ', error.message);
           });
     }
   }
 
   onDelete() {
+    this.isFetching = true;
     this.http.delete<{ name: string }>(`https://demoz-app.firebaseio.com/posts/${this.postId}.json`)
       .subscribe((response) => {
         this.loadedPosts.splice(this.postIndex, 1);
+        this.isFetching = false;
         this.onClearForm();
       },
         (error) => {
+          this.isFetching = false;
           console.error('Failed to delete post: ', error.message);
         });
   }
@@ -84,6 +93,7 @@ export class AppComponent implements OnInit {
   }
 
   private fetchPosts() {
+    this.isFetching = true;
     this.http.get<{ [key: string]: Post }>('https://demoz-app.firebaseio.com/posts.json')
       .pipe(map((response) => {
         const responseArray: Post[] = [];
@@ -95,12 +105,13 @@ export class AppComponent implements OnInit {
         return responseArray;
       }))
       .subscribe((response) => {
-        this.updatePostList(response);
+        this.loadedPosts = response;
+        this.isFetching = false;
+      },
+        (error) => {
+          this.isFetching = false;
+          console.error('Failed to load posts: ' + error.message);
       });
-  }
-
-  updatePostList(posts: Post[]) {
-    this.loadedPosts = posts;
   }
 
   onSelect(index: number) {
