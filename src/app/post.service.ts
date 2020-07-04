@@ -30,7 +30,7 @@ export class PostService {
       params: new HttpParams().set(
         'print', 'pretty'
       )
-    }
+    };
     return this.http.get<{ [key: string]: Post }>('https://demoz-app.firebaseio.com/posts.json', httpOptions)
       .pipe(map((response) => {
         const responseArray: Post[] = [];
@@ -44,7 +44,7 @@ export class PostService {
   }
 
   deletePost(id: string) {
-    return this.http.delete(`https://demoz-app.firebaseio.com/posts/${id}.json`, { observe: 'events' });
+    return this.http.delete(`https://demoz-app.firebaseio.com/posts/${id}.json`);
   }
 
   deleteAllPosts() {

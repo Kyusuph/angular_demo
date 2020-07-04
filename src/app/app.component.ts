@@ -72,13 +72,6 @@ export class AppComponent implements OnInit {
     this.error = null;
     this.postService.deletePost(this.postId)
       .subscribe((response) => {
-        console.log(response);
-        if (response.type === HttpEventType.Response) {
-          console.log('Response');
-        }
-        if (response.type === HttpEventType.Sent) {
-          console.log('Sent');
-        }
         this.loadedPosts.splice(this.postIndex, 1);
         this.loading = false;
         this.onClearForm();
