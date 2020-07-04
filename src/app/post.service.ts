@@ -5,16 +5,20 @@ import { map } from 'rxjs/operators';
 
 import { Post } from './post.model';
 
-@Injectable({providedIn: 'root'})
+@Injectable({ providedIn: 'root' })
 export class PostService {
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   createPost(postData: Post) {
-    return this.http.post<{ name: string }>('https://demoz-app.firebaseio.com/posts.json', postData);
+    return this.http.post<{ name: string }>('https://demoz-app.firebaseio.com/posts.json', postData, { observe: 'response' });
   }
   updatePost(post: Post) {
-    return this.http.put<Post>(`https://demoz-app.firebaseio.com/posts/${post.id}.json`, post);
+    return this.http.put<Post>(`https://demoz-app.firebaseio.com/posts/${post.id}.json`, post,
+    {
+      responseType: 'json',
+      reportProgress: true
+    });
   }
 
   fetchPosts() {
@@ -40,7 +44,7 @@ export class PostService {
   }
 
   deletePost(id: string) {
-    return this.http.delete(`https://demoz-app.firebaseio.com/posts/${id}.json`);
+    return this.http.delete(`https://demoz-app.firebaseio.com/posts/${id}.json`, { observe: 'events' });
   }
 
   deleteAllPosts() {

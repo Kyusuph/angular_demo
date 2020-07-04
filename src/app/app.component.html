@@ -39,6 +39,15 @@
         >
           Delete Post
         </button>
+        <span> | </span>
+        <button
+          class="btn btn-warning"
+          type="button"
+          [disabled]="!postForm?.value?.title && !postForm?.value?.content"
+          (click)="onClearForm()"
+        >
+          Clear form
+        </button>
       </form>
     </div>
   </div>

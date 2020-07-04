@@ -3,6 +3,7 @@ import { FormGroup } from '@angular/forms';
 
 import { Post } from './post.model';
 import { PostService } from './post.service';
+import { HttpEventType } from '@angular/common/http';
 
 @Component({
   selector: 'app-root',
@@ -17,7 +18,7 @@ export class AppComponent implements OnInit {
   loading = false;
   error = null;
 
-  @ViewChild('postForm') postForm: FormGroup;
+  @ViewChild('postForm') postControlForm: FormGroup;
 
   constructor(private postService: PostService) { }
 
@@ -37,6 +38,7 @@ export class AppComponent implements OnInit {
       };
       this.postService.updatePost(newPost)
         .subscribe((response) => {
+          console.log(response);
           this.loadedPosts[this.postIndex] = newPost;
           this.loading = false;
           this.onClearForm();
@@ -48,7 +50,8 @@ export class AppComponent implements OnInit {
     } else {
       this.postService.createPost(postData)
         .subscribe((response) => {
-          const id = response.name;
+          console.log(response);
+          const id = response.body.name;
           this.loadedPosts.push({
             ...postData,
             id
@@ -69,6 +72,13 @@ export class AppComponent implements OnInit {
     this.error = null;
     this.postService.deletePost(this.postId)
       .subscribe((response) => {
+        console.log(response);
+        if (response.type === HttpEventType.Response) {
+          console.log('Response');
+        }
+        if (response.type === HttpEventType.Sent) {
+          console.log('Sent');
+        }
         this.loadedPosts.splice(this.postIndex, 1);
         this.loading = false;
         this.onClearForm();
@@ -84,7 +94,7 @@ export class AppComponent implements OnInit {
     this.editPost = false;
     this.postId = undefined;
     this.postIndex = undefined;
-    this.postForm.reset();
+    this.postControlForm.reset();
   }
 
   onFetchPosts() {
@@ -128,7 +138,7 @@ export class AppComponent implements OnInit {
     this.postIndex = index;
     const { title, content, id } = this.loadedPosts[index];
     this.postId = id;
-    this.postForm.setValue({ title, content });
+    this.postControlForm.setValue({ title, content });
   }
 
   onHandleError() {
