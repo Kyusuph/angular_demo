@@ -15,6 +15,7 @@ export class AppComponent implements OnInit {
   postId; string;
   postIndex; number;
   loading = false;
+  error = null;
 
   @ViewChild('postForm') postForm: FormGroup;
 
@@ -27,6 +28,7 @@ export class AppComponent implements OnInit {
   onSave(postData: Post) {
     // Send Http request
     this.loading = true;
+    this.error = null;
     if (this.editPost) {
       const id = this.postId;
       const newPost = {
@@ -56,6 +58,7 @@ export class AppComponent implements OnInit {
         },
           (error) => {
             this.loading = false;
+            this.error = error;
             console.error('Failed to save post: ', error.message);
           });
     }
@@ -63,6 +66,7 @@ export class AppComponent implements OnInit {
 
   onDelete() {
     this.loading = true;
+    this.error = null;
     this.postService.deletePost(this.postId)
       .subscribe((response) => {
         this.loadedPosts.splice(this.postIndex, 1);
@@ -71,6 +75,7 @@ export class AppComponent implements OnInit {
       },
         (error) => {
           this.loading = false;
+          this.error = error;
           console.error('Failed to delete post: ', error.message);
         });
   }
@@ -89,18 +94,21 @@ export class AppComponent implements OnInit {
   onClearPosts() {
     // Send Http request
     this.loading = true;
+    this.error = null;
     this.postService.deleteAllPosts().subscribe(res => {
       this.loading = false;
       this.loadedPosts = [];
     },
     (error) => {
       this.loading = false;
+      this.error = error;
       console.log('Failed to delete posts: ' + error.message);
     });
   }
 
   private fetchPosts() {
     this.loading = true;
+    this.error = null;
     this.postService.fetchPosts()
       .subscribe((response) => {
         this.loadedPosts = response;
@@ -108,6 +116,8 @@ export class AppComponent implements OnInit {
       },
         (error) => {
           this.loading = false;
+          this.error = error;
+          console.log(error);
           console.error('Failed to load posts: ' + error.message);
       });
   }
