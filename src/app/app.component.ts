@@ -14,7 +14,7 @@ export class AppComponent implements OnInit {
   editPost = false;
   postId; string;
   postIndex; number;
-  isFetching = false;
+  loading = false;
 
   @ViewChild('postForm') postForm: FormGroup;
 
@@ -26,7 +26,7 @@ export class AppComponent implements OnInit {
 
   onSave(postData: Post) {
     // Send Http request
-    this.isFetching = true;
+    this.loading = true;
     if (this.editPost) {
       const id = this.postId;
       const newPost = {
@@ -36,11 +36,11 @@ export class AppComponent implements OnInit {
       this.postService.updatePost(newPost)
         .subscribe((response) => {
           this.loadedPosts[this.postIndex] = newPost;
-          this.isFetching = false;
+          this.loading = false;
           this.onClearForm();
         },
           (error) => {
-            this.isFetching = false;
+            this.loading = false;
             console.error('Failed to update post: ', error.message);
           });
     } else {
@@ -51,26 +51,26 @@ export class AppComponent implements OnInit {
             ...postData,
             id
           });
-          this.isFetching = false;
+          this.loading = false;
           this.onClearForm();
         },
           (error) => {
-            this.isFetching = false;
+            this.loading = false;
             console.error('Failed to save post: ', error.message);
           });
     }
   }
 
   onDelete() {
-    this.isFetching = true;
+    this.loading = true;
     this.postService.deletePost(this.postId)
       .subscribe((response) => {
         this.loadedPosts.splice(this.postIndex, 1);
-        this.isFetching = false;
+        this.loading = false;
         this.onClearForm();
       },
         (error) => {
-          this.isFetching = false;
+          this.loading = false;
           console.error('Failed to delete post: ', error.message);
         });
   }
@@ -88,17 +88,26 @@ export class AppComponent implements OnInit {
 
   onClearPosts() {
     // Send Http request
+    this.loading = true;
+    this.postService.deleteAllPosts().subscribe(res => {
+      this.loading = false;
+      this.loadedPosts = [];
+    },
+    (error) => {
+      this.loading = false;
+      console.log('Failed to delete posts: ' + error.message);
+    });
   }
 
   private fetchPosts() {
-    this.isFetching = true;
+    this.loading = true;
     this.postService.fetchPosts()
       .subscribe((response) => {
         this.loadedPosts = response;
-        this.isFetching = false;
+        this.loading = false;
       },
         (error) => {
-          this.isFetching = false;
+          this.loading = false;
           console.error('Failed to load posts: ' + error.message);
       });
   }

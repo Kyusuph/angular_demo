@@ -33,4 +33,8 @@ export class PostService {
   deletePost(id: string) {
     return this.http.delete(`https://demoz-app.firebaseio.com/posts/${id}.json`);
   }
+
+  deleteAllPosts() {
+    return this.http.delete(`https://demoz-app.firebaseio.com/posts.json`);
+  }
 }

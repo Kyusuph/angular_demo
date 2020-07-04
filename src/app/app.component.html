@@ -60,8 +60,8 @@
   </div>
   <div class="row">
     <div class="col-xs-12 col-md-6 col-md-offset-3">
-      <p *ngIf="!loadedPosts.length && !isFetching">No posts available!</p>
-      <ul class="list-group" *ngIf="loadedPosts.length && !isFetching ">
+      <p *ngIf="!loadedPosts.length && !loading">No posts available!</p>
+      <ul class="list-group" *ngIf="loadedPosts.length && !loading ">
         <li
         class="list-group-item"
         *ngFor="let post of loadedPosts; let i = index"
@@ -71,7 +71,7 @@
           <p> {{ post.content }} </p>
         </li>
       </ul>
-      <h3 align="center" *ngIf="isFetching">Loading...</h3>
+      <h3 align="center" *ngIf="loading">Loading...</h3>
     </div>
   </div>
 </div>
